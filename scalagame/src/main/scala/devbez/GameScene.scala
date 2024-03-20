@@ -3,8 +3,8 @@ package devbez
 import indigo.*
 import indigo.scenes.*
 
-object GameScene extends Scene[Unit, Unit, Unit] {
-  type SceneModel     = Unit
+object GameScene extends Scene[Unit, Model, Unit] {
+  type SceneModel     = Model
   type SceneViewModel = Unit
 
   val name: SceneName =
@@ -13,7 +13,7 @@ object GameScene extends Scene[Unit, Unit, Unit] {
   val THICKNESS: Int = 2
   val SCALE: Int = 2
 
-  val modelLens: Lens[Unit, Unit] =
+  val modelLens: Lens[Model, Model] =
     Lens.keepLatest
 
   val viewModelLens: Lens[Unit, Unit] =
@@ -41,20 +41,20 @@ object GameScene extends Scene[Unit, Unit, Unit] {
 
   def updateModel(
       context: SceneContext[Unit],
-      model: Unit
-  ): GlobalEvent => Outcome[Unit] =
+      model: Model
+  ): GlobalEvent => Outcome[Model] =
     _ => Outcome(model)
 
   def updateViewModel(
       context: SceneContext[Unit],
-      model: Unit,
+      model: Model,
       viewModel: Unit
   ): GlobalEvent => Outcome[Unit] =
     _ => Outcome(viewModel)
 
   def present(
       context: SceneContext[Unit],
-      model: Unit,
+      model: Model,
       viewModel: Unit
   ): Outcome[SceneUpdateFragment] = {
     val origin = Point(50, 50)

@@ -8,11 +8,11 @@ import devbez.generated.Config
 import devbez.generated.Assets
 
 @JSExportTopLevel("IndigoGame")
-object Scalagame extends IndigoGame[Unit, Unit, Unit, Unit] {
+object Scalagame extends IndigoGame[Unit, Unit, Model, Unit] {
   def initialScene(bootData: Unit): Option[SceneName] =
     None
 
-  def scenes(bootData: Unit): NonEmptyList[Scene[Unit, Unit, Unit]] =
+  def scenes(bootData: Unit): NonEmptyList[Scene[Unit, Model, Unit]] =
     NonEmptyList(GameScene)
 
   val eventFilters: EventFilters =
@@ -24,10 +24,10 @@ object Scalagame extends IndigoGame[Unit, Unit, Unit, Unit] {
         .withAssets(Assets.assets.assetSet)
     )
 
-  def initialModel(startupData: Unit): Outcome[Unit] =
-    Outcome(())
+  def initialModel(startupData: Unit): Outcome[Model] =
+    Outcome((Model.Intial))
 
-  def initialViewModel(startupData: Unit, model: Unit): Outcome[Unit] =
+  def initialViewModel(startupData: Unit, model: Model): Outcome[Unit] =
     Outcome(())
 
   def setup(
@@ -39,20 +39,20 @@ object Scalagame extends IndigoGame[Unit, Unit, Unit, Unit] {
 
   def updateModel(
       context: FrameContext[Unit],
-      model: Unit
-  ): GlobalEvent => Outcome[Unit] =
+      model: Model
+  ): GlobalEvent => Outcome[Model] =
     _ => Outcome(model)
 
   def updateViewModel(
       context: FrameContext[Unit],
-      model: Unit,
+      model: Model,
       viewModel: Unit
   ): GlobalEvent => Outcome[Unit] =
     _ => Outcome(viewModel)
 
   def present(
       context: FrameContext[Unit],
-      model: Unit,
+      model: Model,
       viewModel: Unit
   ): Outcome[SceneUpdateFragment] =
     Outcome(SceneUpdateFragment.empty)
