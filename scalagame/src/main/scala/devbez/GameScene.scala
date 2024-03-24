@@ -2,6 +2,7 @@ package devbez
 
 import indigo.*
 import indigo.scenes.*
+import devbez.GameOptions.*
 
 object GameScene extends Scene[Unit, Model, Unit] {
   type SceneModel     = Model
@@ -11,7 +12,14 @@ object GameScene extends Scene[Unit, Model, Unit] {
     SceneName("game")
 
   val THICKNESS: Int = 2
-  val SCALE: Int = 2
+  val SCALE: Int = 1
+
+  // Accessing width and height from gameOptions
+  val viewportWidth: Int = GameOptions.screenWidth
+  val viewportHeight: Int = GameOptions.screenHeight
+
+  // Create a new GameViewport with the width and height from gameOptions
+  val viewport = GameViewport(width = viewportWidth, height = viewportHeight)
 
   val modelLens: Lens[Model, Model] =
     Lens.keepLatest
@@ -25,7 +33,7 @@ object GameScene extends Scene[Unit, Model, Unit] {
   val subSystems: Set[SubSystem] =
     Set()
 
-  def drawTriangle(origin: Point, scale: Int): Shape.Polygon = {
+  def drawTriangle(origin: Point, scale: Int, rotate: Float): Shape.Polygon = {
     Shape.Polygon(
       Fill.Color(RGBA.Black),
       Stroke(THICKNESS, RGBA.White),
@@ -36,7 +44,7 @@ object GameScene extends Scene[Unit, Model, Unit] {
       Point(origin.x - 3 * scale, origin.y + 7 * scale),
       Point(origin.x - 7 * scale, origin.y + 10 * scale),
       Point(origin.x, origin.y - 10 * scale)
-    )
+    ).rotateBy(Radians.fromDegrees(rotate))
   }
 
   def updateModel(
@@ -57,9 +65,9 @@ object GameScene extends Scene[Unit, Model, Unit] {
       model: Model,
       viewModel: Unit
   ): Outcome[SceneUpdateFragment] = {
-    val origin = Point(50, 50)
+    val origin: Point = viewport.center
 
-    val triangle = drawTriangle(origin, SCALE)
+    val triangle = drawTriangle(origin, SCALE, -55.0)
 
     Outcome(SceneUpdateFragment(triangle))
   }
