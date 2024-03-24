@@ -25,7 +25,7 @@ object Scalagame extends IndigoGame[Unit, Unit, Model, Unit] {
     )
 
   def initialModel(startupData: Unit): Outcome[Model] =
-    Outcome((Model.Intial))
+    Outcome((Model.Initial))
 
   def initialViewModel(startupData: Unit, model: Model): Outcome[Unit] =
     Outcome(())
